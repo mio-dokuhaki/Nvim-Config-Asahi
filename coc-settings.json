@@ -1,0 +1,152 @@
+{
+  "suggest.noselect": true,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "inlayHint.enable": true,
+  "semanticTokens.enable": true,
+  "languageserver": {
+    "clangd": {
+      "command": "clangd",
+      "args": ["--background-index"],
+      "rootPatterns": [
+        "compile_flags.txt",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      }
+    },
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]
+    },
+    "zls": {
+      "command": "zls",
+      "filetypes": ["zig", "zon"]
+    },
+    "vls": {
+      "command": "vls",
+      "filetypes": ["v"],
+      "rootPatterns": [".git", "v.mod"],
+      "initializationOptions": {},
+      "settings": {}
+    },
+    "d": {
+      "command": "serve-d",
+      "filetypes": ["d"],
+      "rootPatterns": ["dub.json", "dub.sdl", ".git/"],
+      "initializationOptions": {
+        "cacheDirectory": "~/.cache/serve-d"
+      }
+    },
+    "prolog-lsp": {
+      "command": "swipl",
+      "args": [
+        "-g",
+        "use_module(library(lsp_server)).",
+        "-g",
+        "lsp_server:main",
+        "-t",
+        "halt",
+        "--",
+        "stdio"
+      ],
+      "filetypes": ["prolog"]
+    },
+    "julia": {
+      "command": "julia",
+      "args": [
+        "--startup-file=no",
+        "--history-file=no",
+        "-e",
+        "using LanguageServer, LanguageServer.SymbolServer; runserver()"
+      ],
+      "filetypes": ["julia"],
+      "initializationOptions": {},
+      "settings": {
+        "julia": {
+          "format": {
+            "indent": 4,
+            "ops": true
+          }
+        }
+      }
+    },
+    "jedi": {
+      "command": "jedi-language-server",
+      "enable": true,
+      "filetypes": ["python"],
+      "startupMessage": false
+    },
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    },
+    "R": {
+      "command": "/usr/bin/R",
+      "args": ["--slave", "-e", "languageserver::run()"],
+      "filetypes": ["r"]
+    }
+  },
+  "python.jediEnabled": true,
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
+  "go.goplsOptions": {
+    "completeUnimported": true
+  },
+  "diagnostic-languageserver.filetypes": {
+    "python": ["flake8"]
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "python": ["black"]
+  },
+  "diagnostic-languageserver.linters": {
+    "flake8": {
+      "command": "flake8",
+      "debounce": 100,
+      "args": ["--format=%(row)d,%(col)d,%(code).1s,%(code)s: %(text)s", "-"],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "flake8",
+      "formatLines": 1,
+      "formatPattern": [
+        "(\\d+),(\\d+),([A-Z]),(.*)(\\r|\\n)*$",
+        {
+          "line": 1,
+          "column": 2,
+          "security": 3,
+          "message": 4
+        }
+      ],
+      "securities": {
+        "W": "warning",
+        "E": "error",
+        "F": "error",
+        "C": "error",
+        "N": "error"
+      }
+    }
+  },
+  "diagnostic-languageserver.formatters": {
+    "black": {
+      "command": "black",
+      "args": ["--quiet", "-"]
+    }
+  }
+}
